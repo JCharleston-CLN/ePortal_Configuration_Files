@@ -1,7 +1,18 @@
+#!/bin/bash
+# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+# This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
+# on a CentOS 7 server with SELinux disabled.
+
+
+
 base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
 echo
 echo
-echo Welcome to the KernelCare ePortal package downloader. This should take less than a minute to complete.
+echo Welcome to the KernelCare ePortal package downloader.
+echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+echo This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
+echo on a CentOS 7 server with SELinux disabled.
+echo
 echo
 echo First we are going to add the Nginx repo
 echo
@@ -30,7 +41,9 @@ EOL
 
 
 echo We are now going to install the yum download-only plugin
-
+echo
+echo
+echo
 yum install yum-plugin-downloadonly
 
 echo Now we are going to download all the eportal packages.
@@ -41,5 +54,5 @@ yum -y install --downloadonly --downloaddir=/root/mypackages/ kcare-eportal
 
 echo The ePortal packages have now beend downloaded to the mypackages folder in the root directory.
 echo These should be all the files required to install eportal on your like OS image behind the firewall.
-echo Move these packages to live OS image server, with root owner, and run rpm -ihb *.rpm
+echo Move these packages to live OS image server, with root owner, and run rpm -ihv *.rpm
 echo After this, you can set up the ePortal admin as outlined in the instructions at docs.kernelcare.com
