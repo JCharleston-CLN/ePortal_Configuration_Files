@@ -55,7 +55,7 @@ then
      echo We are now going to configure ePortal to work with KernelCare+ packages
      echo We are going to download our base userspace file...
 
-     wget https://github.com/Revmagi/eportal_installer/raw/master/userspace-20200720-074750.tar.gz
+     wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20200720-074750.tar.gz
 
      echo ""
      echo ""
