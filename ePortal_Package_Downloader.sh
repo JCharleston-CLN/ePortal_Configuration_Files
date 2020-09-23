@@ -59,5 +59,5 @@ wget https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Fil
 
 echo The ePortal packages have now beend downloaded to the mypackages folder in the root directory.
 echo These should be all the files required to install eportal on your like OS image behind the firewall.
-echo Move these packages to live OS image server, with root owner, and run rpm -ihv *.rpm
+echo Move these packages to live OS image server, with root owner, and run sh ePortal_Firewalled_installer.sh 
 echo After this, you can set up the ePortal admin as outlined in the instructions at docs.kernelcare.com
