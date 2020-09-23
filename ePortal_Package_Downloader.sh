@@ -52,6 +52,11 @@ echo
 
 yum -y install --downloadonly --downloaddir=/root/mypackages/ kcare-eportal
 
+wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20200720-074750.tar.gz -P /root/mypackages
+wget
+
+
+
 echo The ePortal packages have now beend downloaded to the mypackages folder in the root directory.
 echo These should be all the files required to install eportal on your like OS image behind the firewall.
 echo Move these packages to live OS image server, with root owner, and run rpm -ihv *.rpm
