@@ -1,10 +1,21 @@
-#  CentOS 7 RHEL 7 eportal install script - Jamie Charleston - Senior Sales Engineer - CloudLinux
-#  Current as of March 5, 2020
+#!/bin/bash
+# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+# This package is for assisting organizations that need to install ePortal with or without KernelCare+ Support. This script will assumes installation
+# on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access.
+# This script is current as of Sep 22, 2020
+
 
 base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
 echo
 echo
-echo Welcome to the KernelCare ePortal installation Process. This should take less than a minute to complete.
+echo Welcome to the KernelCare ePortal installation Process.
+echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+echo This package is for assisting organizations that need to install ePortal with or without KernelCare+ Support. This script will assumes installation
+echo on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access.
+echo This script is current as of Sep 22, 2020
+echo
+echo
+echo "Let's get started."
 echo First we are going to add the Nginx repo
 echo
 echo
@@ -36,15 +47,24 @@ echo
 
 yum -y install kcare-eportal
 
-echo ePortal has been installed. What would you like to use for the admin password?
+
+clear
+
+echo ePortal is now installed.
+echo "Let's set up your admin password so that you can log into the UI."
+echo What would you like to use for the admin password?
 read varPassword
 
 kc.eportal -a admin -p $varPassword
 
+
+echo Your password has been configured successfully.
+sleep 3s
+
 clear
 
-echo Do you want to configure ePortal to work with KernelCare+
-echo Please type yes or no
+echo "Do you want to configure ePortal to work with KernelCare+ ?"
+echo "Please type 'yes' or 'no'"
 
 read varAnswer
 a=$varAnswer
@@ -53,6 +73,7 @@ if [ $a == yes ]
 then
      clear
      echo We are now going to configure ePortal to work with KernelCare+ packages
+     sleep 2s
      echo We are going to download our base userspace file...
 
      wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20200720-074750.tar.gz
@@ -96,7 +117,7 @@ then
 
   fi
 
-
+clear
 base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
 # grab your IP address
 ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
