@@ -53,7 +53,7 @@ echo
 yum -y install --downloadonly --downloaddir=/root/mypackages/ kcare-eportal
 
 wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20200720-074750.tar.gz -P /root/mypackages
-wget
+wget https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Firewalled_installer.sh -P /root/mypackages
 
 
 
