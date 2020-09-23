@@ -28,6 +28,11 @@ gpgcheck=0
 enabled=1
 EOL
 
+
+echo nginx repo configured.
+sleep 2s
+clear
+
 echo Next we are adding the kernelcare eportal repo
 echo
 echo
@@ -41,6 +46,10 @@ gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare
 gpgcheck=1
 EOL
 
+echo KernelCare Repo has been configured.
+sleep 2s
+clear
+
 echo Now we are going to start installing eportal
 echo
 echo
@@ -51,6 +60,8 @@ yum -y install kcare-eportal
 clear
 
 echo ePortal is now installed.
+echo
+echo
 echo "Let's set up your admin password so that you can log into the UI."
 echo What would you like to use for the admin password?
 read varPassword
