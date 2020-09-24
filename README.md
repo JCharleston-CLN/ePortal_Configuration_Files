@@ -25,7 +25,7 @@ This script is written and provided as is by Jamie Charleston - Senior Sales Eng
 This package is for assisting organizations that need to upgrade ePortal with KernelCare+ Support. This script will assumes installation
 on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access with base ePortal already installed.
 This script is current as of Sep 24, 2020
-To run this file on your server just execute this command as root on the command line: bash <(wget-qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal_KC%2B_Upgrader_v1.2.sh)
+To run this file on your server just execute this command as root on the command line: bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal_KC%2B_Upgrader_v1.2.sh)
 
 
 
