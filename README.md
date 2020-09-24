@@ -23,7 +23,6 @@ You do not need to download the script, it can be run by copy and paste as root 
 
 ePortal_KC+_Upgrader_v1.2.sh  
 
-This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
 This package is for assisting organizations that need to upgrade ePortal with KernelCare+ Support. This script will assumes installation
 on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access with base ePortal already installed.
 This script is current as of Sep 24, 2020
