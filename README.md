@@ -37,7 +37,9 @@ To run this file on your server just execute this command as root on the command
 
 ePortal_Package_Downloader.sh  
  
-This script is for those organizations who are building an ePortal behind their firewall and do not have internet access. As most administrators know, Linux requires specific packages for your current OS install. To make sure you have our eportal installer and all dependancies please set up a server instance with an image identical to the os image used behind the firewall. Then you can run this script to get all of the files required. You will be able to gather the files in the root/mypackages folder and move them to the final server behind the firewall. Then just run the attached script included in the bundle of files. This file is called ePortal_Firewalled_installer.sh To run this file on your server just execute this command as root on the command line:  bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Package_Downloader.sh)
+This script is for those organizations who are building an ePortal behind their firewall and do not have internet access. As most administrators know, Linux requires specific packages for your current OS install. To make sure you have our eportal installer and all dependancies please set up a server instance with an image identical to the os image used behind the firewall. Then you can run this script to get all of the files required. You will be able to gather the files in the root/mypackages folder and move them to the final server behind the firewall. Then just run the attached script included in the bundle of files. This file is called ePortal_Firewalled_installer.sh To run this file on your server just execute this command as root on the command line: 
+
+            bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Package_Downloader.sh)
 
 
 
