@@ -19,6 +19,17 @@ You do not need to download the script, it can be run by copy and paste as root 
  -- This script is for those organizations who are building an ePortal behind their firewall and do not have internet access. As most administrators know, Linux requires specific packages for your current OS install. To make sure you have our eportal installer and all dependancies please set up a server instance with an image identical to the os image used behind the firewall. Then you can run this script to get all of the files required. You will be able to gather the files in the root/mypackages folder and move them to the final server behind the firewall. Then just run the attached script included in the bundle of files. This file is called ePortal_Firewalled_installer.sh To run this file on your server just execute this command as root on the command line:  bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Package_Downloader.sh)
 
 
+ePortal_KC+_Upgrader_v1.2.sh  
+
+This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+This package is for assisting organizations that need to upgrade ePortal with KernelCare+ Support. This script will assumes installation
+on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access with base ePortal already installed.
+This script is current as of Sep 24, 2020
+To run this file on your server just execute this command as root on the command line: bash <(wget-qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal_KC%2B_Upgrader_v1.2.sh)
+
+
+
+
  userspace-xxxxx  
  
  
