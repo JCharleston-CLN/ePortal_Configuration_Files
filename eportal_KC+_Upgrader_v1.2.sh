@@ -30,7 +30,7 @@ then
      sleep 2s
      echo We are going to download our base userspace file...
 
-     wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20200720-074750.tar.gz
+     wget https://github.com/JCharleston-CLN/ePortal_Configuration_Files/raw/master/userspace-20201015-125324.tar.gz
 
      echo ""
      echo ""
@@ -40,7 +40,7 @@ then
 
        rm -rf /usr/share/kcare-eportal/userspace/
 
-       tar xf ./userspace-20200720-074750.tar.gz -C /usr/share/kcare-eportal/
+       tar xf ./userspace-20201015-125324.tar.gz -C /usr/share/kcare-eportal/
 
       echo ""
       echo ""
