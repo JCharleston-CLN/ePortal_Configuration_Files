@@ -10,7 +10,7 @@ echo
 echo
 echo Welcome to the KernelCare ePortal installation Process.
 echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
-echo his package is for assisting organizations that need to prepare a CentOS 7 server for KernelCare(+) POC. This package is going to
+echo "his package is for assisting organizations that need to prepare a CentOS 7 server for KernelCare(+) POC. This package is going to"
 echo download the CentOS 7.0 kernel as well as glibc and openssl packages, install them and reboot the server. This should prepare your server
 echo for visible patches to your server, live and in memory. 
 
