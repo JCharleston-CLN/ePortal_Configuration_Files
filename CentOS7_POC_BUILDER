@@ -1,0 +1,63 @@
+#!/bin/bash
+# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+# This package is for assisting organizations that need to prepare a CentOS 7 server for KernelCare(+) POC. This package is going to
+# download the CentOS 7.0 kernel as well as glibc and openssl packages, install them and reboot the server. This should prepare your server
+# for visible patches to your server, live and in memory
+
+
+base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
+echo
+echo
+echo Welcome to the KernelCare ePortal installation Process.
+echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+echo his package is for assisting organizations that need to prepare a CentOS 7 server for KernelCare(+) POC. This package is going to
+echo download the CentOS 7.0 kernel as well as glibc and openssl packages, install them and reboot the server. This should prepare your server
+echo for visible patches to your server, live and in memory. 
+
+echo
+echo
+
+
+echo "Please confirm you are ready revert your CentOS 7 server to old packages and that you understand we will reboot the server at the end of the process?"
+echo "Please type 'yes' or 'no'"
+
+read varAnswer
+a=$varAnswer
+
+if [ $a == yes ]
+then
+     clear
+     echo We are now going to configure ePortal to work with KernelCare+ packages
+     sleep 2s
+     echo We are going to download our base userspace file...
+
+     wget http://vault.centos.org/7.0.1406/os/x86_64/Packages/kernel-3.10.0-123.el7.x86_64.rpm
+     wget http://vault.centos.org/7.0.1406/os/x86_64/Packages/openssl-1.0.1e-34.el7.x86_64.rpm
+     wget http://vault.centos.org/7.0.1406/os/x86_64/Packages/openssl-libs-1.0.1e-34.el7.x86_64.rpm
+     wget http://vault.centos.org/7.0.1406/os/x86_64/Packages/openssl-1.0.1e-34.el7.x86_64.rpm
+     wget http://vault.centos.org/7.0.1406/os/x86_64/Packages/openssl-libs-1.0.1e-34.el7.x86_64.rpm
+     echo ""
+     echo ""
+     echo Files were downloaded successfully
+     echo ""
+     echo "We will now install older packages"
+
+       rpm -ihv *.rpm --force
+       
+
+      echo ""
+      echo ""
+      echo   "Files have been installed, we will now reboot your server for the new kernel and packages to start working."
+
+     sleep 5s
+     
+      reboot
+
+       
+  else
+    clear
+    echo We are complete and have not made any modification to your server
+    sleep 5s
+
+  fi
+
