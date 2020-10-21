@@ -57,4 +57,6 @@ This file is part of ePortal_Package_Downloader. It is not meant to be downloade
 This file is part of the eportal configuration for KC+
 
 
+CentOS7 POC Builder
 
+bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/CentOS7_POC_BUILDER)
