@@ -74,6 +74,67 @@ sleep 3s
 
 clear
 
+
+echo "     Do you need to configure your ePortal to work with a Proxy?"
+echo "     This may be required if you need FedRAMP or other security requirements."
+echo ""
+echo "**** If you configure this you will need to make sure your Proxy is properly configured. ****"
+echo "**** If you continue with this configuration now, you need to provide the Proxy URL. ****"
+echo "**** If you do not have the Proxy URL or Proxy configured, you can edit these settings later. ****"
+echo "**** Instructions:  https://docs.kernelcare.com/kernelcare-enterprise/#how-to-adjust-proxy-on-eportal-machine ****"
+echo ""
+echo "Please type 'yes' or 'no'"
+
+read varAnswer
+a=$varAnswer
+
+if [ $a == yes ]
+then
+     clear
+     echo "Please provide your full proxy url in full format: i.e.  https://example.com  "
+     read varProxy
+
+
+            FILE=/usr/share/kcare-eportal/config/local.py
+            if [ -f "$FILE" ]; then
+cat <<-EOT>>/usr/share/kcare-eportal/config/local.py
+PROXY = '$varProxy'
+EOT
+systemctl restart eportal
+
+            else
+touch /usr/share/kcare-eportal/config/local.py
+cat <<-EOT>>/usr/share/kcare-eportal/config/local.py
+PROXY = '$varProxy'
+EOT
+
+chown nginx:nginx /usr/share/kcare-eportal/config/local.py
+
+systeclt restart eportal
+
+
+            fi
+
+
+
+     else
+
+       clear
+       echo ePortal will not be configured for Proxy Configuration
+       sleep 5s
+
+     fi
+
+
+
+
+clear
+
+
+
+
+
+
 echo "Do you want to configure ePortal to work with KernelCare+ ?"
 echo "Please type 'yes' or 'no'"
 
