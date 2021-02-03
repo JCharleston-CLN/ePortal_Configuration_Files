@@ -9,12 +9,12 @@ My name is Jamie Charleston, I am the Senior Sales Engineer for CloudLinux which
 
 
 
-eportal-installer_v1.3.sh  
+eportal-installer_v1.4.sh  
 
-This file is for preparing a server for eportal installation and configuration. This script is expecting a CentOS 7 server with SELinux disabled, 1 CPU, 1G ram and 200G disk space at min per 10,000 servers. This script assumes the server has access to the internet. This script provides you the option to configure this ePortal for use with KC+ or not.
+This file is for preparing a server for eportal installation and configuration. This script is expecting a CentOS 7 or 8 server with SELinux disabled, 1 CPU, 1G ram and 200G disk space at min per 10,000 servers. This script assumes the server has access to the internet. This script provides you the option to configure this ePortal for use with a Proxy or not.
 You do not need to download the script, it can be run by copy and paste as root on the command line. 
 
-        bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal-installer_v1.3.sh)
+        bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal-installer_v1.4.sh)
 
  The installer will ask you to provide a password for the 'admin' user. Then it will ask you if you want KC+ integration. Please answer 'yes' or 'no'. That is all. After installation you can log into ePortal and finish configuration as per our docs with credentials provided by your accout manager.
 
@@ -30,7 +30,7 @@ To run this file on your server just execute this command as root on the command
 
         bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal_KC%2B_Upgrader_v1.2.sh)
  
- 
+ **** No Longer needed as of install 1.4  ****
 
 
 
