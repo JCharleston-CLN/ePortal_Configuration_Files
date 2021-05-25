@@ -1,13 +1,33 @@
 #!/bin/bash
-# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
 # This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
 # on a CentOS 7 server with SELinux disabled.
 
-base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
+base64 -d <<<"X19fX19fX19fICAgICAgICAgICAgICAgICAgIF9fX19fX18gIF9fX19fX18gIF9fX19fX18gIF9f
+X19fX18gICAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyBfX19fX19fX18gX19f
+X19fXyAgXyAgICAgICAKXF9fICAgX18vfFwgICAgIC98fFwgICAgIC98KCAgX19fXyBcKCAgX19f
+ICApKCAgX19fXyApKCAgX19fXyBcICAoICBfX19fIFwoICBfX19fICkoICBfX18gICkoICBfX19f
+IClcX18gICBfXy8oICBfX18gICkoIFwgICAgICAKICAgKSAoICAgfCApICAgKCB8KCBcICAgLyAp
+fCAoICAgIFwvfCAoICAgKSB8fCAoICAgICl8fCAoICAgIFwvICB8ICggICAgXC98ICggICAgKXx8
+ICggICApIHx8ICggICAgKXwgICApICggICB8ICggICApIHx8ICggICAgICAKICAgfCB8ICAgfCB8
+ICAgfCB8IFwgKF8pIC8gfCB8ICAgICAgfCAoX19fKSB8fCAoX19fXyl8fCAoX18gICAgICB8IChf
+XyAgICB8IChfX19fKXx8IHwgICB8IHx8IChfX19fKXwgICB8IHwgICB8IChfX18pIHx8IHwgICAg
+ICAKICAgfCB8ICAgfCB8ICAgfCB8ICApIF8gKCAgfCB8ICAgICAgfCAgX19fICB8fCAgICAgX18p
+fCAgX18pICAgICB8ICBfXykgICB8ICBfX19fXyl8IHwgICB8IHx8ICAgICBfXykgICB8IHwgICB8
+ICBfX18gIHx8IHwgICAgICAKICAgfCB8ICAgfCB8ICAgfCB8IC8gKCApIFwgfCB8ICAgICAgfCAo
+ICAgKSB8fCAoXCAoICAgfCAoICAgICAgICB8ICggICAgICB8ICggICAgICB8IHwgICB8IHx8IChc
+ICggICAgICB8IHwgICB8ICggICApIHx8IHwgICAgICAKICAgfCB8ICAgfCAoX19fKSB8KCAvICAg
+XCApfCAoX19fXy9cfCApICAgKCB8fCApIFwgXF9ffCAoX19fXy9cICB8IChfX19fL1x8ICkgICAg
+ICB8IChfX18pIHx8ICkgXCBcX18gICB8IHwgICB8ICkgICAoIHx8IChfX19fL1wKICAgKV8oICAg
+KF9fX19fX18pfC8gICAgIFx8KF9fX19fX18vfC8gICAgIFx8fC8gICBcX18vKF9fX19fX18vICAo
+X19fX19fXy98LyAgICAgICAoX19fX19fXyl8LyAgIFxfXy8gICApXyggICB8LyAgICAgXHwoX19f
+X19fXy8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAK"
 echo
 echo
-echo Welcome to the KernelCare ePortal Firewalled installer.
-echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with KernelCare ePortal.
+echo Welcome to the TuxCare ePortal Firewalled installer.
+echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
 echo This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
 echo on a CentOS 7 server with SELinux disabled.
 echo
@@ -32,63 +52,36 @@ sleep 3s
 
 clear
 
-echo "Do you want to configure ePortal to work with KernelCare+ ?"
-echo "Please type 'yes' or 'no'"
-
-read varAnswer
-a=$varAnswer
-
-if [ $a == yes ]
-then
-     clear
-     echo We are now going to configure ePortal to work with KernelCare+ packages
-     sleep 2s
-
-
-     echo ""
-     echo "Extract it to the portal's static files location"
-
-       rm -rf /usr/share/kcare-eportal/userspace/
-
-       tar xf ./userspace-20200720-074750.tar.gz -C /usr/share/kcare-eportal/
-
-      echo ""
-      echo ""
-      echo   "Add nginx location for the new files, if it not exists:"
-
-       grep -qF 'userspace' /etc/nginx/conf.d/eportal.conf || sed -i "\$i location ~* ^/userspace/(.*)/(.*)/kpatch.tgz$ {alias /usr/share/kcare-eportal; try_files /userspace/all/\$2.tgz =404;}" /etc/nginx/conf.d/eportal.conf
-
-
-      echo ""
-      echo ""
-      echo New files have been added and properly updated
-      sleep 3s
-      echo ""
-      echo ""
-      echo Reload nginx
-
-       systemctl reload nginx
-
-       echo "."
-       echo ".."
-       echo "..."
-       echo Eportal configured for KernelCare+
-       sleep 5s
-  else
-    clear
-    echo ePortal will not be configured for KernelCare+
-    sleep 5s
-
-  fi
 
 clear
-base64 -d <<<"IF9fICBfX18gICBfX19fX18gICAgIF9fX19fX18gLl9fX19fXyAgICAgX19fX19fICAgLl9fX19fXyAgICAgLl9fX19fX19fX19fLiAgICBfX18gICAgICAgX18gICAgICAKfCAgfC8gIC8gIC8gICAgICB8ICAgfCAgIF9fX198fCAgIF8gIFwgICAvICBfXyAgXCAgfCAgIF8gIFwgICAgfCAgICAgICAgICAgfCAgIC8gICBcICAgICB8ICB8ICAgICAKfCAgJyAgLyAgfCAgLC0tLS0nICAgfCAgfF9fICAgfCAgfF8pICB8IHwgIHwgIHwgIHwgfCAgfF8pICB8ICAgYC0tLXwgIHwtLS0tYCAgLyAgXiAgXCAgICB8ICB8ICAgICAKfCAgICA8ICAgfCAgfCAgICAgICAgfCAgIF9ffCAgfCAgIF9fXy8gIHwgIHwgIHwgIHwgfCAgICAgIC8gICAgICAgIHwgIHwgICAgICAvICAvX1wgIFwgICB8ICB8ICAgICAKfCAgLiAgXCAgfCAgYC0tLS0uICAgfCAgfF9fX18gfCAgfCAgICAgIHwgIGAtLScgIHwgfCAgfFwgIFwtLS0tLiAgIHwgIHwgICAgIC8gIF9fX19fICBcICB8ICBgLS0tLS4KfF9ffFxfX1wgIFxfX19fX198ICAgfF9fX19fX198fCBffCAgICAgICBcX19fX19fLyAgfCBffCBgLl9fX19ffCAgIHxfX3wgICAgL19fLyAgICAgXF9fXCB8X19fX19fX3wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA="
+base64 -d <<<"X19fX19fX19fICAgICAgICAgICAgICAgICAgIF9fX19fX18gIF9fX19fX18gIF9fX19fX18gIF9f
+X19fX18gICAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyBfX19fX19fX18gX19f
+X19fXyAgXyAgICAgICAKXF9fICAgX18vfFwgICAgIC98fFwgICAgIC98KCAgX19fXyBcKCAgX19f
+ICApKCAgX19fXyApKCAgX19fXyBcICAoICBfX19fIFwoICBfX19fICkoICBfX18gICkoICBfX19f
+IClcX18gICBfXy8oICBfX18gICkoIFwgICAgICAKICAgKSAoICAgfCApICAgKCB8KCBcICAgLyAp
+fCAoICAgIFwvfCAoICAgKSB8fCAoICAgICl8fCAoICAgIFwvICB8ICggICAgXC98ICggICAgKXx8
+ICggICApIHx8ICggICAgKXwgICApICggICB8ICggICApIHx8ICggICAgICAKICAgfCB8ICAgfCB8
+ICAgfCB8IFwgKF8pIC8gfCB8ICAgICAgfCAoX19fKSB8fCAoX19fXyl8fCAoX18gICAgICB8IChf
+XyAgICB8IChfX19fKXx8IHwgICB8IHx8IChfX19fKXwgICB8IHwgICB8IChfX18pIHx8IHwgICAg
+ICAKICAgfCB8ICAgfCB8ICAgfCB8ICApIF8gKCAgfCB8ICAgICAgfCAgX19fICB8fCAgICAgX18p
+fCAgX18pICAgICB8ICBfXykgICB8ICBfX19fXyl8IHwgICB8IHx8ICAgICBfXykgICB8IHwgICB8
+ICBfX18gIHx8IHwgICAgICAKICAgfCB8ICAgfCB8ICAgfCB8IC8gKCApIFwgfCB8ICAgICAgfCAo
+ICAgKSB8fCAoXCAoICAgfCAoICAgICAgICB8ICggICAgICB8ICggICAgICB8IHwgICB8IHx8IChc
+ICggICAgICB8IHwgICB8ICggICApIHx8IHwgICAgICAKICAgfCB8ICAgfCAoX19fKSB8KCAvICAg
+XCApfCAoX19fXy9cfCApICAgKCB8fCApIFwgXF9ffCAoX19fXy9cICB8IChfX19fL1x8ICkgICAg
+ICB8IChfX18pIHx8ICkgXCBcX18gICB8IHwgICB8ICkgICAoIHx8IChfX19fL1wKICAgKV8oICAg
+KF9fX19fX18pfC8gICAgIFx8KF9fX19fX18vfC8gICAgIFx8fC8gICBcX18vKF9fX19fX18vICAo
+X19fX19fXy98LyAgICAgICAoX19fX19fXyl8LyAgIFxfXy8gICApXyggICB8LyAgICAgXHwoX19f
+X19fXy8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAK"
+
 # grab your IP address
 ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 
 echo
 echo
-echo Your ePortal has been installed. It is now ready for you to login and finish synchronization.
+echo Your TuxCare ePortal has been installed. It is now ready for you to login and finish synchronization.
 echo You can log in at http://$ip4
 echo
 echo
