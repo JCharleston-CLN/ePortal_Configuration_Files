@@ -58,14 +58,16 @@ echo Next we are adding the kernelcare eportal repo
 echo
 echo
 
+
 cat > /etc/yum.repos.d/kcare-eportal.repo <<EOL
 [kcare-eportal]
 name=KernelCare ePortal
-baseurl=https://repo.eportal.kernelcare.com/x86_64.el7/
+baseurl=https://repo.cloudlinux.com/kcare-eportal/\$releasever/\$basearch/
 enabled=1
 gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare
 gpgcheck=1
 EOL
+
 
 echo KernelCare Repo has been configured.
 sleep 2s
