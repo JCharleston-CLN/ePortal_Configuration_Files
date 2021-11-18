@@ -1,8 +1,8 @@
 #!/bin/bash
 # This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
-# This package is for assisting organizations that need to install ePortal with or without KernelCare+ Support. This script will assumes installation
-# on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access.
-# This script is current as of Sep 22, 2020
+# This package is for assisting organizations that need to install ePortal. This installer will assume you are installing
+# on a compatible OS with 1G ram, 1 CPU and 200G disk space min and internet access as required.
+# This script is current as of Nov 18, 2021
 
 
 base64 -d <<<"X19fX19fX19fICAgICAgICAgICAgICAgICAgIF9fX19fX18gIF9fX19fX18gIF9fX19fX18gIF9f
@@ -31,8 +31,8 @@ echo
 echo Welcome to the TuxCare ePortal installation Process.
 echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
 echo This package is for assisting organizations that need to install ePortal. This script will assumes installation
-echo on a CentOS 7 server with SELinux disabled, 1G ram, 1 CPU and 200G disk space and internet access.
-echo This script is current as of May 25, 2021
+echo on a appropriate OS with 1G ram, 1 CPU and 200G disk space minimum resources and internet access as required.
+echo This script is current as of Nov 18, 2021
 echo
 echo
 sleep 5s
@@ -77,8 +77,26 @@ echo Now we are going to start installing eportal
 echo
 echo
 
+echo "Do you have SELinux Enabled on this server?"
+echo "Please type 'yes' or 'no'"
+
+read varSELAnswer
+s=$varSELAnswer
+
+if [ $s == yes ]
+then
+
+echo "We are now installing ePortal with SELinux enabled."
+yum -y install kcare-eportal-selinux
+
+else
+
+echo "We are now installing ePortal with SELinux disabled."
 yum -y install kcare-eportal
 
+     fi
+     
+     
 
 clear
 
