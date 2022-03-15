@@ -190,8 +190,13 @@ X19fXy8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
 ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
 ICAgICAgICAgICAgICAgICAgICAK"
 
-# grab your IP address
-ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+
+# get interface for the default route,
+# usually the same way the system is accessed from outside
+DEFAULT_INTERFACE=$(/sbin/ip route list default|awk '{print $5}')
+
+# grab your IP address from default interface
+ip4=$(/sbin/ip -o -4 addr list ${DEFAULT_INTERFACE} | awk '{print $4}' | cut -d/ -f1)
 
 echo
 echo
