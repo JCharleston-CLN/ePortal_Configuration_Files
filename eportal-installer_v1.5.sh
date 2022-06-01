@@ -105,7 +105,7 @@ a=$varCache
 if [ $a == yes ]
 then
      clear
-     echo "Please provide your full proxy url in full format: i.e.  https://example.com:3128  "
+     echo "We are now configuring your ePortal to Cache patches.  "
   
             FILE=/etc/eportal/config
             if [ -f "$FILE" ]; then
