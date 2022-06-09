@@ -81,7 +81,7 @@ echo
 echo
 echo "Let's set up your admin password so that you can log into the UI."
 echo "What would you like to use for the admin password?"
-read varPassword
+read -s varPassword
 
 kc.eportal -a admin -p $varPassword
 
