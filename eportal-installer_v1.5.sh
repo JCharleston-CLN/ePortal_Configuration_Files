@@ -112,13 +112,14 @@ then
 cat <<-EOT>>/etc/eportal/config
 CACHE_MODE = True
 EOT
+chown nginx:nginx /etc/eportal/config
 systemctl restart eportal
             else
 touch /etc/eportal/config
 cat <<-EOT>>/etc/eportal/config
 CACHE_MODE = True
 EOT
-#chown nginx:nginx /etc/eportal/config
+chown nginx:nginx /etc/eportal/config
 systeclt restart eportal
             fi
      else
