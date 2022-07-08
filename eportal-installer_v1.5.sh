@@ -113,14 +113,14 @@ cat <<-EOT>>/etc/eportal/config
 CACHE_MODE = True
 EOT
 chown nginx:nginx /etc/eportal/config
-systemctl restart eportal
+
             else
 touch /etc/eportal/config
 cat <<-EOT>>/etc/eportal/config
 CACHE_MODE = True
 EOT
 chown nginx:nginx /etc/eportal/config
-systeclt restart eportal
+
             fi
      else
        clear
@@ -157,6 +157,7 @@ then
 cat <<-EOT>>/etc/eportal/config
 PROXY = '$varProxy'
 EOT
+chown nginx:nginx /etc/eportal/config
 systemctl restart eportal
             else
 touch /etc/eportal/config
@@ -173,6 +174,15 @@ systeclt restart eportal
      fi
 clear
 
+echo we are now going to restart your eportal to make sure all the configurations have taken.
+
+systemctl stop eportal
+
+sleep 3s
+
+systemctl start eportal
+
+sleep 3s
 
 echo
 echo
