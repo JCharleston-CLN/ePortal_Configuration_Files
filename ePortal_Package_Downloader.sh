@@ -1,38 +1,16 @@
 #!/bin/bash
-# This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
-# This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
-# on a CentOS 7 server with SELinux disabled.
 
-
-
-base64 -d <<<"X19fX19fX19fICAgICAgICAgICAgICAgICAgIF9fX19fX18gIF9fX19fX18gIF9fX19fX18gIF9f
-X19fX18gICAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyAgX19fX19fXyBfX19fX19fX18gX19f
-X19fXyAgXyAgICAgICAKXF9fICAgX18vfFwgICAgIC98fFwgICAgIC98KCAgX19fXyBcKCAgX19f
-ICApKCAgX19fXyApKCAgX19fXyBcICAoICBfX19fIFwoICBfX19fICkoICBfX18gICkoICBfX19f
-IClcX18gICBfXy8oICBfX18gICkoIFwgICAgICAKICAgKSAoICAgfCApICAgKCB8KCBcICAgLyAp
-fCAoICAgIFwvfCAoICAgKSB8fCAoICAgICl8fCAoICAgIFwvICB8ICggICAgXC98ICggICAgKXx8
-ICggICApIHx8ICggICAgKXwgICApICggICB8ICggICApIHx8ICggICAgICAKICAgfCB8ICAgfCB8
-ICAgfCB8IFwgKF8pIC8gfCB8ICAgICAgfCAoX19fKSB8fCAoX19fXyl8fCAoX18gICAgICB8IChf
-XyAgICB8IChfX19fKXx8IHwgICB8IHx8IChfX19fKXwgICB8IHwgICB8IChfX18pIHx8IHwgICAg
-ICAKICAgfCB8ICAgfCB8ICAgfCB8ICApIF8gKCAgfCB8ICAgICAgfCAgX19fICB8fCAgICAgX18p
-fCAgX18pICAgICB8ICBfXykgICB8ICBfX19fXyl8IHwgICB8IHx8ICAgICBfXykgICB8IHwgICB8
-ICBfX18gIHx8IHwgICAgICAKICAgfCB8ICAgfCB8ICAgfCB8IC8gKCApIFwgfCB8ICAgICAgfCAo
-ICAgKSB8fCAoXCAoICAgfCAoICAgICAgICB8ICggICAgICB8ICggICAgICB8IHwgICB8IHx8IChc
-ICggICAgICB8IHwgICB8ICggICApIHx8IHwgICAgICAKICAgfCB8ICAgfCAoX19fKSB8KCAvICAg
-XCApfCAoX19fXy9cfCApICAgKCB8fCApIFwgXF9ffCAoX19fXy9cICB8IChfX19fL1x8ICkgICAg
-ICB8IChfX18pIHx8ICkgXCBcX18gICB8IHwgICB8ICkgICAoIHx8IChfX19fL1wKICAgKV8oICAg
-KF9fX19fX18pfC8gICAgIFx8KF9fX19fX18vfC8gICAgIFx8fC8gICBcX18vKF9fX19fX18vICAo
-X19fX19fXy98LyAgICAgICAoX19fX19fXyl8LyAgIFxfXy8gICApXyggICB8LyAgICAgXHwoX19f
-X19fXy8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAK"
+echo Welcome to the TuxCare Air-gapped ePortal installation packager.
+echo
+echo This script is written and provided as is by Jamie Charleston - Director of Global Sales Engineering at TuxCare.
+echo This script is for assisting organizations that need to install ePortal. This script assumes installation
+echo on an appropriate OS with 1G ram, 1 CPU and 200G disk space minimum.
+echo This script is current as of AUG, 2022
 echo
 echo
-echo Welcome to the TuxCare ePortal package downloader.
-echo This script is written and provided as is by Jamie Charleston - Senior Sales Engineer at CloudLinux for use with TuxCare ePortal.
-echo This package is for assisting organizations that need to install ePortal behind a firewall. This package assumes you are running it
-echo on a CentOS 7 server with SELinux disabled.
-echo
+sleep 5s
+clear
+echo "Let's get started."
 echo
 echo First we are going to add the Nginx repo
 echo
@@ -46,19 +24,29 @@ gpgcheck=0
 enabled=1
 EOL
 
-echo Next we are adding the kernelcare eportal repo
+
+echo Nginx repo is now configured.
+sleep 4s
+clear
+
+echo "Now we are adding the TuxCare ePortal repo."
 echo
 echo
+
 
 cat > /etc/yum.repos.d/kcare-eportal.repo <<EOL
 [kcare-eportal]
 name=KernelCare ePortal
-baseurl=https://repo.eportal.kernelcare.com/x86_64.el7/
+baseurl=https://repo.cloudlinux.com/kcare-eportal/\$releasever/\$basearch/
 enabled=1
 gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare
 gpgcheck=1
 EOL
 
+
+echo TuxCare Repo has been configured.
+sleep 4s
+clear
 
 echo We are now going to install the yum download-only plugin
 echo
@@ -66,14 +54,38 @@ echo
 echo
 yum install yum-plugin-downloadonly
 
-echo Now we are going to download all the eportal packages.
+
+echo Now we are preparing to download all the eportal packages.
 echo
 echo
 
-yum -y install --downloadonly --downloaddir=/root/mypackages/ kcare-eportal
+echo "We are checking to see if you have SELinux."
 
-wget https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Firewalled_installer.sh -P /root/mypackages
+SELINUX_STATE=$(getenforce)
 
+if [ "$SELINUX_STATE" == "Enforcing" ] || [ "$SELINUX_STATE" == "Permissive" ] ; then
+  echo ""
+  echo "SELinux is enabled"
+  echo "We are now installing ePortal with SELinux enabled."
+  sleep 4s
+  
+  yum -y install --downloadonly --downloaddir=/root/mypackages/  kcare-eportal-selinux
+
+  wget https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Firewalled_installer.sh -P /root/mypackages
+  
+else
+  echo ""
+  echo "SELinux is disabled (or missing)"
+  echo "We are now installing ePortal with SELinux disabled."
+  sleep 4s
+  
+  yum -y install --downloadonly --downloaddir=/root/mypackages/ kcare-eportal
+
+  wget https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ePortal_Firewalled_installer.sh -P /root/mypackages
+  
+fi 
+
+clear
 
 
 echo The TuxCare ePortal packages have now beend downloaded to the mypackages folder in the root directory.
