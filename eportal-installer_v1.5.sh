@@ -4,8 +4,8 @@ echo Welcome to the TuxCare ePortal installation Process.
 echo
 echo This script is written and provided as is by Jamie Charleston - Director of Global Sales Engineering at TuxCare.
 echo This script is for assisting organizations that need to install ePortal. This script assumes installation
-echo on an appropriate OS with 1G ram, 1 CPU and 50G disk space minimum for caching mode and internet access as required.
-echo This script is current as of July, 2022
+echo on an appropriate OS with 1G ram, 1 CPU and 25G disk space minimum for caching mode and internet access as required.
+echo This script is current as of March 10, 2023
 echo
 echo
 sleep 5s
