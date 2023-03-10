@@ -11,7 +11,7 @@ fi
 # Execute commands based on the Linux distribution
 if [ "$DISTRIBUTION" = "Red Hat" ]; then
   # Execute commands for Red Hat
-  bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal-installer_v1.5.sh)
+  bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/AlmaCentOS-eportal-installer.sh)
   # Add your commands here for Red Hat
 elif [ "$DISTRIBUTION" = "Ubuntu" ]; then
   # Execute commands for Ubuntu
