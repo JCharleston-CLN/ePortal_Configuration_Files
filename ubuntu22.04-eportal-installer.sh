@@ -146,7 +146,3 @@ echo
 echo
 echo For additional information to configure your feed credentials look at
 echo https://docs.tuxcare.com/eportal/\#installation
-
-
-
-bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ubuntu20.04-eportal-installer.sh)
