@@ -13,7 +13,7 @@ echo  Linux OS Support: AlmaLinux 8, CentOS 7/8, or Ubuntu 20.04/22.04
 echo  CPU: 1 CPU Core
 echo  Memory: 1G
 echo  Disk Space: 25G caching or 200G+ non-Caching
-ehco
+echo
 echo  Legal Disclaimer:
 echo  This script is provided "AS IS" and without warranty of any kind.
 echo  You, the user, assume any risks associated with the use of this script.
