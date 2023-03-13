@@ -14,7 +14,7 @@ tuxcare-eportal-installer.sh
 This is the master install script for TuxCare ePortal for all supported distributions. Copy and past the command below and answer the three questions and your ePortal will be properly installed and configured.
 
 
-       bash <(wget -qO- https://tinyurl.com/2gcf7f5s)
+             bash <(wget -qO- https://tinyurl.com/2gcf7f5s)
 
 
 tuxcare-eportal-ssl-installer.sh
@@ -24,7 +24,7 @@ This is the master install script for installing an Authoritative SSL Certificat
 
 
       
-      bash < (wget -qO- https://tinyurl.com/2g9gtm7v)
+              bash <(wget -qO- https://tinyurl.com/2g9gtm7v)
 
 
 
