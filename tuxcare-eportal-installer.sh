@@ -55,7 +55,7 @@ elif [ "$DISTRIBUTION" = "Ubuntu" ]; then
     # Add your commands here for Ubuntu 20.04
   else
     # Execute commands for Ubuntu 22.04 or later
-    bash <(wget -qO-https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ubuntu22.04-eportal-installer.sh
+    bash <(wget -qO-https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ubuntu22.04-eportal-installer.sh)
     # Add your commands here for Ubuntu 22.04 or later
   fi
 else
