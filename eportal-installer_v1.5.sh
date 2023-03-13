@@ -19,7 +19,7 @@ echo
 cat > /etc/yum.repos.d/nginx.repo <<EOL
 [nginx]
 name=nginx repo
-baseurl=http://nginx.org/packages/centos/7/\$basearch/
+baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
 gpgcheck=0
 enabled=1
 EOL
