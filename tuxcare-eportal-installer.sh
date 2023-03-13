@@ -51,11 +51,11 @@ elif [ "$DISTRIBUTION" = "Ubuntu" ]; then
   # Execute commands for Ubuntu
   if [ "$(echo $UBUNTU_VERSION'<'20.04 | bc -l)" -eq 0 ] && [ "$(echo $UBUNTU_VERSION'<'22.04 | bc -l)" -eq 1 ]; then
     # Execute commands for Ubuntu 20.04
-    bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ubuntu20.04-eportal-installer.sh)
+    bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal-certbot-ubuntu.sh)
     # Add your commands here for Ubuntu 20.04
   else
     # Execute commands for Ubuntu 22.04 or later
-    bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/ubuntu22.04-eportal-installer.sh)
+    bash <(wget -qO- https://raw.githubusercontent.com/JCharleston-CLN/ePortal_Configuration_Files/master/eportal-certbot-ubuntu.sh)
     # Add your commands here for Ubuntu 22.04 or later
   fi
 else
