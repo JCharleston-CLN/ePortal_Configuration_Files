@@ -3,7 +3,7 @@
 clear
 echo ****************************************************************************
 echo  Title: TuxCare ePortal Automated Installer Script.
-echo  Purpose: Install Let\'s Encrypt requirements and deploy SSL certificate.
+echo  Purpose: Install and bas configure TuxCare ePortal.
 echo  Created by: Jamie Charleston 
 echo  Version: 1.5
 echo  Last updated: 03/12/2023
