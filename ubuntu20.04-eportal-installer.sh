@@ -1,14 +1,19 @@
 #!/bin/bash
+# ****************************************************************************
+#  Title: TuxCare ubuntu 20.04 ePortal Installer script.
+#  Purpose: Install and configure TuxCare ePortal on Ubuntu 20.04.
+#  Created by: Jamie Charleston
+#  Version: 1.1
+#  Last updated: 03/12/2023
+#
+#  Legal Disclaimer:
+#  This script is provided "AS IS" and without warranty of any kind.
+#  You, the user, assume any risks associated with the use of this script.
+#  You are solely responsible for the use and misuse of this script.
+#o  You agree to indemnify and hold harmless the creator of this script
+#  from any and all claims arising from your use or misuse of the script.
+# ****************************************************************************
 
-echo Welcome to the TuxCare ePortal installation Process.
-echo
-echo This script is written and provided as is by Jamie Charleston - Director of Global Sales Engineering at TuxCare.
-echo This script is for assisting organizations that need to install ePortal. This script assumes installation
-echo on an appropriate OS with 1G ram, 1 CPU and 25G disk space minimum for caching mode and internet access as required.
-echo This script is current as of March 10, 2023
-echo
-echo
-sleep 5s
 clear
 echo "Let's get started."
 echo
