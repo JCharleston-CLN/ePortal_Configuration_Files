@@ -27,9 +27,10 @@ fi
 
 # Proceed with the script
 echo "You agreed to the terms. Continuing with the script."
-echo We are going to configure the epel-release repository and
-echo then install and configure SNAPd
+echo "We are going to configure the epel-release repository and"
+echo "then install and configure SNAPd"
 sleep 3
+clear
 yum -y install epel-release
 yum -y install snapd
 systemctl enable --now snapd.socket
