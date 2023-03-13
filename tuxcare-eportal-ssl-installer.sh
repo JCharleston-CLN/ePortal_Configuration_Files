@@ -20,6 +20,8 @@ echo  You agree to indemnify and hold harmless the creator of this script
 echo  from any and all claims arising from your use or misuse of the script.
 echo ****************************************************************************
 
+# tiny url:  tinyurl.com/2g9gtm7v
+
 # Prompt the user to agree to the terms
 read -p "Do you agree to these terms? (y/n): " response
 
