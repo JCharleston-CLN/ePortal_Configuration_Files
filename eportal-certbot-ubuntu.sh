@@ -1,0 +1,122 @@
+#!/bin/bash
+
+clear
+echo ****************************************************************************
+echo  Title: TuxCare ePortal Let\'s Encrypt configuration tool.
+echo  Purpose: Install Let\'s Encrypt requirements and deploy SSL certificate.
+echo  Created by: Jamie Charleston and Miguel Varela of TuxCare
+echo  Version: 1.0
+echo  Last updated: 03/12/2023
+echo
+echo  Legal Disclaimer:
+echo  This script is provided "AS IS" and without warranty of any kind.
+echo  You, the user, assume any risks associated with the use of this script.
+echo  You are solely responsible for the use and misuse of this script.
+echo  You agree to indemnify and hold harmless the creator of this script
+echo  from any and all claims arising from your use or misuse of the script.
+echo ****************************************************************************
+
+# Prompt the user to agree to the terms
+read -p "Do you agree to these terms? (y/n): " response
+
+# Check if the user agreed to the terms
+if [ "$response" != "y" ]; then
+  echo "You did not agree to the terms. Exiting script."
+  exit 1
+fi
+
+# Proceed with the script
+echo "You agreed to the terms. Continuing with the script."
+echo We are going to install and configure SNAPD.
+sleep 3
+sudo apt install snapd
+systemctl restart snapd.socket
+
+clear
+
+echo SNAP has been installed, we need to wait a few seconds for it to seed.
+echo -n "Waiting "
+for i in {1..10}; do
+    printf "."
+    sleep 3
+done
+
+if ! snap wait system seed.loaded; then
+    echo "Snap seed did not load successfully"
+    exit 1
+fi
+echo
+snap install core; sudo snap refresh core
+
+clear
+echo We are now going to install CertBot for Let\'sEncrypt
+snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
+echo CertBot is installed
+sleep 3
+clear
+
+echo We are about to install your SSL, but first we need some information.
+echo Please type your domain name in all lowercase.
+read varDomain_name
+
+echo Domain Name: $varDomain_name
+echo
+echo Please type in your email address:
+read varEmail
+echo Email address: $varEmail
+sleep 3
+
+echo During the installation you will be asked if you want to opt in to Let\'sEncrypts Feedback list.
+echo We will let you select if how you would like to respond to this yourself.
+sleep 5
+
+echo Installing the SSL..
+certbot certonly --nginx -m $varEmail --agree-tos -d $varDomain_name --key-type ecdsa --elliptic-curve secp384r1
+echo Configuring nginx...
+mv /etc/nginx/eportal.ssl.conf.example /etc/nginx/eportal.ssl.conf
+grep -c "include eportal.ssl.conf;" /etc/nginx/conf.d/eportal.conf || sed -i "3i \ include eportal.ssl.conf;" /etc/nginx/conf.d/eportal.conf
+sed -i -e "s|server_name.*|server_name $varDomain_name;|g" /etc/nginx/eportal.ssl.conf
+sed -i -e "s|ssl_certificate .*|ssl_certificate /etc/letsencrypt/live/$varDomain_name/fullchain.pem;|" /etc/nginx/eportal.ssl.conf
+sed -i -e "s|ssl_certificate_key .*|ssl_certificate_key /etc/letsencrypt/live/$varDomain_name/privkey.pem;|" /etc/nginx/eportal.ssl.conf
+
+echo The certificat as been installed. We are now going to restart Nginx.
+# Restart Nginx
+sudo systemctl restart nginx
+
+# Check status
+if sudo systemctl is-active --quiet nginx; then
+    echo "Nginx restarted successfully"
+else
+    echo "Failed to restart Nginx"
+fi
+
+sleep 3
+clear
+
+
+echo Let\'s finish by checking your UFW Firewall, we need port 443 enabled.
+
+function enable_port_443() {
+    # Check if firewalld is running and enabled
+    if ! sudo ufw status | grep -q "Status: active"; then
+       echo "UFW is not enabled. Enabling..."
+       return
+    fi
+
+    # Check if port 443 is enabled
+    if sudo ufw status | grep -q "443/tcp\s*ALLOW"; then
+       echo "Port 443 is already enabled"
+       return
+    else
+       echo "Enabling port 443"
+       sudo ufw allow 443/tcp
+
+fi
+}
+
+# Call the function to enable port 443
+enable_port_443
+
+echo Done!
+echo You may visit your ePortal at https://$varDomain_name
