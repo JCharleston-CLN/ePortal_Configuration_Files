@@ -1,32 +1,21 @@
 #!/bin/bash
 
 clear
-echo ****************************************************************************
-echo  Title: TuxCare ePortal Let\'s Encrypt configuration tool.
-echo  Purpose: Install Let\'s Encrypt requirements and deploy SSL certificate.
-echo  Created by: Jamie Charleston and Miguel Varela of TuxCare
-echo  Version: 1.0
-echo  Last updated: 03/12/2023
-echo
-echo  Legal Disclaimer:
-echo  This script is provided "AS IS" and without warranty of any kind.
-echo  You, the user, assume any risks associated with the use of this script.
-echo  You are solely responsible for the use and misuse of this script.
-echo  You agree to indemnify and hold harmless the creator of this script
-echo  from any and all claims arising from your use or misuse of the script.
-echo ****************************************************************************
-
-# Prompt the user to agree to the terms
-read -p "Do you agree to these terms? (y/n): " response
-
-# Check if the user agreed to the terms
-if [ "$response" != "y" ]; then
-  echo "You did not agree to the terms. Exiting script."
-  exit 1
-fi
-
-# Proceed with the script
-echo "You agreed to the terms. Continuing with the script."
+# ****************************************************************************
+#  Title: TuxCare ePortal Let\'s Encrypt configuration tool.
+#  Purpose: Install Let\'s Encrypt requirements and deploy SSL certificate.
+#  Created by: Jamie Charleston and Miguel Varela of TuxCare
+#  Version: 1.0
+#  Last updated: 03/12/2023
+#
+#  Legal Disclaimer:
+#  This script is provided "AS IS" and without warranty of any kind.
+#  You, the user, assume any risks associated with the use of this script.
+#  You are solely responsible for the use and misuse of this script.
+#  You agree to indemnify and hold harmless the creator of this script
+#  from any and all claims arising from your use or misuse of the script.
+# ****************************************************************************
+echo Let\'s get started.
 echo We are going to install and configure SNAPD.
 sleep 3
 sudo apt install snapd
