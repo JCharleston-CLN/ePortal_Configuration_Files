@@ -1,5 +1,39 @@
 #!/usr/bin/env bash
 
+clear
+echo ****************************************************************************
+echo  Title: TuxCare ePortal Automated Installer Script.
+echo  Purpose: Install Let\'s Encrypt requirements and deploy SSL certificate.
+echo  Created by: Jamie Charleston 
+echo  Version: 1.5
+echo  Last updated: 03/12/2023
+echo
+echo     Minimum System Requirements to support 10,000 servers
+echo  Linux OS Support: AlmaLinux 8, CentOS 7/8, or Ubuntu 20.04/22.04
+echo  CPU: 1 CPU Core
+echo  Memory: 1G
+echo  Disk Space: 25G caching or 200G+ non-Caching
+ehco
+echo  Legal Disclaimer:
+echo  This script is provided "AS IS" and without warranty of any kind.
+echo  You, the user, assume any risks associated with the use of this script.
+echo  You are solely responsible for the use and misuse of this script.
+echo  You agree to indemnify and hold harmless the creator of this script
+echo  from any and all claims arising from your use or misuse of the script.
+echo ****************************************************************************
+
+# Prompt the user to agree to the terms
+read -p "Do you agree to these terms? (y/n): " response
+
+# Check if the user agreed to the terms
+if [ "$response" != "y" ]; then
+  echo "You did not agree to the terms. Exiting script."
+  exit 1
+fi
+
+# Proceed with the script
+echo "You agreed to the terms. Continuing with the script."
+
 # Determine the Linux distribution
 if [ -f /etc/redhat-release ]; then
   DISTRIBUTION="Red Hat"
