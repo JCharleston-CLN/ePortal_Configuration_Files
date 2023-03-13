@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ****************************************************************************
-#  Title: TuxCare ubuntu 20.04 ePortal Installer script.
-#  Purpose: Install and configure TuxCare ePortal on Ubuntu 20.04.
+#  Title: TuxCare ubuntu 22.04 ePortal Installer script.
+#  Purpose: Install and configure TuxCare ePortal on Ubuntu 22.04.
 #  Created by: Jamie Charleston
 #  Version: 1.1
 #  Last updated: 03/12/2023
