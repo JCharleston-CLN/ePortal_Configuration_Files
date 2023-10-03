@@ -23,7 +23,7 @@ echo
 cat > /etc/yum.repos.d/nginx.repo <<EOL
 [nginx]
 name=nginx repo
-baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+baseurl=https://nginx.org/packages/centos/\$releasever/\$basearch/
 gpgcheck=0
 enabled=1
 EOL
@@ -84,10 +84,18 @@ echo ePortal is now installed.
 echo
 echo
 echo "Let's set up your admin password so that you can log into the UI."
-echo "What would you like to use for the admin password?"
-read -s varPassword
-
-kc.eportal -a admin -p $varPassword
+echo "Your password must contain at least 10 characters."
+while true; do
+read -s -p "Enter your password: " varPassword
+echo
+    if [ ${#varPassword} -ge 10 ]; then
+      echo "Password is valid."
+      kc.eportal -a admin -p $varPassword
+      break
+    else
+      echo "Error: password should be at least 10 characters. Please try again."
+    fi
+done
 
 
 echo Your password has been configured successfully.
