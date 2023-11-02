@@ -52,6 +52,33 @@ echo TuxCare Repo has been configured.
 sleep 4s
 clear
 
+# Check if the /etc/os-release file exists and then proceed
+if [ -f /etc/os-release ]; then
+    # Source the os-release file to get the VERSION_ID and ID variables
+    . /etc/os-release
+
+    # Check for CentOS 7 or RHEL 7
+    if [[ "$ID" == "centos" || "$ID" == "rhel" ]] && [[ "$VERSION_ID" == "7" ]]; then
+        echo "This is CentOS 7 or RHEL 7."
+        echo "We are going to install some prerequisite dependencies."
+        yum install -y centos-release-scl
+    else
+        echo "This is not CentOS 7 or RHEL 7. We can continue."
+    fi
+elif [ -f /etc/redhat-release ]; then
+    # Alternative check using redhat-release for systems where os-release is not available
+    if grep -q -E 'CentOS Linux release 7|Red Hat Enterprise Linux Server release 7' /etc/redhat-release; then
+        echo "This is CentOS 7 or RHEL 7."
+        echo "We are going to install some prerequisite dependencies."
+        yum install -y centos-release-scl
+    else
+        echo "This is not CentOS 7 or RHEL 7."
+    fi
+else
+    echo "Could not determine the OS version."
+fi
+
+
 echo Now we are going to start installing ePortal
 echo
 echo
