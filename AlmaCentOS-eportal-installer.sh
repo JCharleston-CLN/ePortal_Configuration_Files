@@ -93,7 +93,7 @@ if [ "$SELINUX_STATE" == "Enforcing" ] || [ "$SELINUX_STATE" == "Permissive" ] ;
   echo "We are now installing ePortal with SELinux enabled."
   sleep 4s
   
-  yum -y install kcare-eportal-selinux
+  yum -y install kcare-eportal
   
 else
   echo ""
