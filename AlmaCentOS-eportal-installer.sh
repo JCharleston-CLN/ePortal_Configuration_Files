@@ -57,22 +57,49 @@ if [ -f /etc/os-release ]; then
     # Source the os-release file to get the VERSION_ID and ID variables
     . /etc/os-release
 
-    # Check for CentOS 7 or RHEL 7
-    if [[ "$ID" == "centos" || "$ID" == "rhel" ]] && [[ "$VERSION_ID" == "7" ]]; then
-        echo "This is CentOS 7 or RHEL 7."
+    # Check for CentOS 7
+    if [[ "$ID" == "centos" ]] && [[ "$VERSION_ID" == "7" ]]; then
+        echo "This is CentOS 7."
         echo "We are going to install some prerequisite dependencies."
         yum install -y centos-release-scl
+
+    # Check for RHEL 7
+    elif [[ "$ID" == "rhel" ]] && [[ "$VERSION_ID" == "7" ]]; then
+        echo "This is RHEL 7."
+        echo "We are going to enable repositories and install dependencies."
+        subscription-manager repos --enable rhel-7-server-optional-rpms
+        subscription-manager repos --enable rhel-server-rhscl-7-rpms
+
+    # Check for Oracle Linux 7
+    elif [[ "$ID" == "ol" ]] && [[ "$VERSION_ID" == "7" ]]; then
+        echo "This is Oracle Linux 7."
+        echo "We are going to install some prerequisite dependencies."
+        yum install -y oracle-softwarecollection-release-el7
+
     else
-        echo "This is not CentOS 7 or RHEL 7. We can continue."
+        echo "This is not CentOS 7, RHEL 7, or Oracle Linux 7. No specific actions required."
     fi
+
 elif [ -f /etc/redhat-release ]; then
     # Alternative check using redhat-release for systems where os-release is not available
-    if grep -q -E 'CentOS Linux release 7|Red Hat Enterprise Linux Server release 7' /etc/redhat-release; then
-        echo "This is CentOS 7 or RHEL 7."
+    if grep -q -E 'CentOS Linux release 7' /etc/redhat-release; then
+        echo "This is CentOS 7."
         echo "We are going to install some prerequisite dependencies."
         yum install -y centos-release-scl
+
+    elif grep -q -E 'Red Hat Enterprise Linux Server release 7' /etc/redhat-release; then
+        echo "This is RHEL 7."
+        echo "We are going to enable repositories and install dependencies."
+        subscription-manager repos --enable rhel-7-server-optional-rpms
+        subscription-manager repos --enable rhel-server-rhscl-7-rpms
+
+    elif grep -q -E 'Oracle Linux Server release 7' /etc/redhat-release; then
+        echo "This is Oracle Linux 7."
+        echo "We are going to install some prerequisite dependencies."
+        yum install -y oracle-softwarecollection-release-el7
+
     else
-        echo "This is not CentOS 7 or RHEL 7."
+        echo "This is not CentOS 7, RHEL 7, or Oracle Linux 7."
     fi
 else
     echo "Could not determine the OS version."
