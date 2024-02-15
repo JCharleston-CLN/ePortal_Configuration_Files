@@ -4,7 +4,7 @@
 #  Purpose: Install and configure TuxCare ePortal.
 #  Created by: Jamie Charleston
 #  Version: 1.1
-#  Last updated: 03/12/2023
+#  Last updated: 02/15/2024
 #
 #  Legal Disclaimer:
 #  This script is provided "AS IS" and without warranty of any kind.
