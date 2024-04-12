@@ -4,8 +4,8 @@
 #  Title: TuxCare ubuntu 22.04 ePortal Installer script.
 #  Purpose: Install and configure TuxCare ePortal on Ubuntu 22.04.
 #  Created by: Jamie Charleston
-#  Version: 1.1
-#  Last updated: 03/12/2023
+#  Version: 1.3
+#  Last updated: 04/12/2024
 #
 #  Legal Disclaimer:
 #  This script is provided "AS IS" and without warranty of any kind.
@@ -103,6 +103,46 @@ chown nginx:nginx /etc/eportal/config
        sleep 3s
      fi
 clear
+
+echo "Business Unit Separation:"
+echo ""
+echo "Would you like to enable Managing Multiple Business Units in Isolation?"
+echo ""
+echo "Please type 'yes' or 'no'"
+
+read varCache
+a=$varCache
+
+if [ $a == yes ]
+then
+     clear
+     echo "We are now configuring your ePortal to enable BU Isolation.  "
+
+            FILE=/etc/eportal/config
+            if [ -f "$FILE" ]; then
+cat <<-EOT>>/etc/eportal/config
+BUNITS = True
+BUNITS_LOGIN_SELECTOR = True
+BUNITS_SELECTOR = True
+EOT
+chown nginx:nginx /etc/eportal/config
+            else
+touch /etc/eportal/config
+cat <<-EOT>>/etc/eportal/config
+BUNITS = True
+BUNITS_LOGIN_SELECTOR = True
+BUNITS_SELECTOR = True
+EOT
+chown nginx:nginx /etc/eportal/config
+            fi
+     else
+       clear
+       echo "Business Unit Isolation will not be configured."
+       sleep 3s
+     fi
+
+clear
+
 echo "     Do you need to configure your ePortal to work with a Proxy?"
 echo "     This may be required if you need FedRAMP or other security requirements."
 echo ""
