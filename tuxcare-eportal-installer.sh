@@ -5,8 +5,8 @@ echo ***************************************************************************
 echo  Title: TuxCare ePortal Automated Installer Script.
 echo  Purpose: Install and base configure TuxCare ePortal.
 echo  Created by: Jamie Charleston 
-echo  Version: 1.5
-echo  Last updated: 03/12/2023
+echo  Version: 1.7
+echo  Last updated: 04/12/2024
 echo
 echo     Minimum System Requirements to support 10,000 servers
 echo  Linux OS Support: AlmaLinux 8, CentOS 7/8, or Ubuntu 20.04/22.04
