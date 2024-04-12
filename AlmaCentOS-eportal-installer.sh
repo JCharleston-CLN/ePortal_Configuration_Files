@@ -3,8 +3,8 @@
 #  Title: TuxCare RHEL Variant Linux ePortal Installer script.
 #  Purpose: Install and configure TuxCare ePortal.
 #  Created by: Jamie Charleston
-#  Version: 1.4
-#  Last updated: 02/15/2024
+#  Version: 1.5
+#  Last updated: 04/12/2024
 #
 #  Legal Disclaimer:
 #  This script is provided "AS IS" and without warranty of any kind.
