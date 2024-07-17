@@ -51,7 +51,8 @@ sleep 3
 clear
 
 echo We are about to install your SSL, but first we need some information.
-echo Please type your domain name in all lowercase.
+echo "Please type your complete FQDN name in all lowercase."
+echo "Please ensure DNS is working or this process will fail."
 read varDomain_name
 
 echo Domain Name: $varDomain_name
