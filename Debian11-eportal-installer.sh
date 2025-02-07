@@ -25,7 +25,7 @@ apt update && apt install -y --no-install-recommends curl ca-certificates
 
 curl https://repo.cloudlinux.com/kernelcare/kernelcare.gpg -o /usr/share/keyrings/kcare-eportal.gpg
 
-at > /etc/apt/sources.list.d/kcare-eportal.list <<EOL
+cat > /etc/apt/sources.list.d/kcare-eportal.list <<EOL
 deb [signed-by=/usr/share/keyrings/kcare-eportal.gpg] https://repo.cloudlinux.com/kcare-eportal/debian/11 kcare main
 EOL
 
