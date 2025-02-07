@@ -9,8 +9,8 @@ echo  Version: 2.0
 echo  Last updated: 02/07/2025
 echo
 echo     Minimum System Requirements to support 10,000 servers
-echo  Linux OS Support: AlmaLinux 8, CentOS 7/8, or Ubuntu 20.04/22.04/24.04
-echo                    Debian 11/12                  
+echo  Linux OS Support: AlmaLinux 8/9, RHEL 8/9, OEL 8/9
+echo                    Debian 11/12 , Ubuntu 20.04/22.04/24.04                  
 echo  CPU: 1 CPU Core
 echo  Memory: 1G
 echo  Disk Space: 25G caching or 200G+ non-Caching
