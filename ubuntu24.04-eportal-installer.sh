@@ -40,7 +40,7 @@ echo Now we are going to start installing ePortal
 echo
 echo
 
-apt update && apt install -y --no-install-recommends kcare-eportal
+apt update && apt install -y --no-install-recommends --allow-unauthenticated kcare-eportal
 
 
 clear
