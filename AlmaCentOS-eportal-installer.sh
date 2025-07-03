@@ -43,7 +43,7 @@ cat > /etc/yum.repos.d/kcare-eportal.repo <<EOL
 name=KernelCare ePortal
 baseurl=https://repo.cloudlinux.com/kcare-eportal/\$releasever/\$basearch/
 enabled=1
-gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare
+gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare-rsa4096
 gpgcheck=1
 EOL
 
