@@ -3,8 +3,8 @@
 #  Title: TuxCare RHEL Variant Linux ePortal Installer script.
 #  Purpose: Install and configure TuxCare ePortal.
 #  Created by: Jamie Charleston
-#  Version: 1.5
-#  Last updated: 04/12/2024
+#  Version: 1.6
+#  Last updated: 07/23/2025
 #
 #  Legal Disclaimer:
 #  This script is provided "AS IS" and without warranty of any kind.
@@ -13,274 +13,417 @@
 #  You agree to indemnify and hold harmless the creator of this script
 #  from any and all claims arising from your use or misuse of the script.
 # ****************************************************************************
+
+# Function to log messages with timestamps
+log_message() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+# Function to check if repo content matches expected configuration
+check_repo_content() {
+    local repo_file="$1"
+    local expected_baseurl="$2"
+    local repo_name="$3"
+    
+    if [ -f "$repo_file" ]; then
+        if grep -q "$expected_baseurl" "$repo_file" && grep -q "enabled=1" "$repo_file"; then
+            log_message "$repo_name repository already exists and is properly configured."
+            return 0
+        else
+            log_message "$repo_name repository file exists but configuration is incorrect. Updating..."
+            return 1
+        fi
+    else
+        log_message "$repo_name repository does not exist. Creating..."
+        return 1
+    fi
+}
+
+# Function to validate service installation and status
+validate_service() {
+    local service_name="$1"
+    local package_name="$2"
+    
+    # Check if package is installed
+    if rpm -q "$package_name" &>/dev/null; then
+        log_message "$package_name is installed successfully."
+    else
+        log_message "ERROR: $package_name installation failed!"
+        exit 1
+    fi
+    
+    # Check if service exists
+    if systemctl list-unit-files | grep -q "$service_name"; then
+        log_message "$service_name service is available."
+        
+        # Enable the service
+        systemctl enable "$service_name"
+        
+        # Check if service can start
+        if systemctl start "$service_name"; then
+            log_message "$service_name service started successfully."
+            sleep 3
+            
+            # Verify service is running
+            if systemctl is-active --quiet "$service_name"; then
+                log_message "$service_name service is running."
+                return 0
+            else
+                log_message "WARNING: $service_name service failed to start properly."
+                return 1
+            fi
+        else
+            log_message "ERROR: Failed to start $service_name service!"
+            return 1
+        fi
+    else
+        log_message "ERROR: $service_name service not found!"
+        return 1
+    fi
+}
+
+# Function to get server IP address
+get_server_ip() {
+    # Try multiple methods to get the IP
+    local ip=""
+    
+    # Method 1: ip route (most reliable for getting the IP used for internet access)
+    ip=$(ip route get 8.8.8.8 2>/dev/null | grep -oP 'src \K\S+' | head -1)
+    
+    # Method 2: hostname -I (fallback)
+    if [ -z "$ip" ]; then
+        ip=$(hostname -I | awk '{print $1}')
+    fi
+    
+    # Method 3: ifconfig (if available)
+    if [ -z "$ip" ] && command -v ifconfig >/dev/null; then
+        ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -1)
+    fi
+    
+    echo "$ip"
+}
+
 clear
-echo "Let's get started."
-echo
-echo First we are going to add the Nginx repo
-echo
+log_message "Starting TuxCare ePortal installation..."
 echo
 
-cat > /etc/yum.repos.d/nginx.repo <<EOL
+# Check if running as root
+if [ "$EUID" -ne 0 ]; then
+    log_message "ERROR: This script must be run as root!"
+    exit 1
+fi
+
+log_message "Configuring Nginx repository..."
+
+# Check and configure Nginx repo
+if ! check_repo_content "/etc/yum.repos.d/nginx.repo" "https://nginx.org/packages/centos" "Nginx"; then
+    cat > /etc/yum.repos.d/nginx.repo <<EOL
 [nginx]
 name=nginx repo
 baseurl=https://nginx.org/packages/centos/\$releasever/\$basearch/
 gpgcheck=0
 enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
 EOL
-
-
-echo Nginx repo is now configured.
-sleep 4s
-clear
-
-echo "Now we are adding the TuxCare ePortal repo."
-echo
-echo
-
-
-cat > /etc/yum.repos.d/kcare-eportal.repo <<EOL
-[kcare-eportal]
-name=KernelCare ePortal
-baseurl=https://repo.cloudlinux.com/kcare-eportal/\$releasever/\$basearch/
-enabled=1
-gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare-rsa4096
-gpgcheck=1
-EOL
-
-
-echo TuxCare Repo has been configured.
-sleep 4s
-clear
-
-# Check if the /etc/os-release file exists and then proceed
-if [ -f /etc/os-release ]; then
-    # Source the os-release file to get the VERSION_ID and ID variables
-    . /etc/os-release
-
-    # Check for CentOS 7
-    if [[ "$ID" == "centos" ]] && [[ "$VERSION_ID" == "7" ]]; then
-        echo "This is CentOS 7."
-        echo "We are going to install some prerequisite dependencies."
-        yum install -y centos-release-scl
-
-    # Check for RHEL 7
-    elif [[ "$ID" == "rhel" ]] && [[ "$VERSION_ID" == "7" ]]; then
-        echo "This is RHEL 7."
-        echo "We are going to enable repositories and install dependencies."
-        subscription-manager repos --enable rhel-7-server-optional-rpms
-        subscription-manager repos --enable rhel-server-rhscl-7-rpms
-
-    # Check for Oracle Linux 7
-    elif [[ "$ID" == "ol" ]] && [[ "$VERSION_ID" == "7" ]]; then
-        echo "This is Oracle Linux 7."
-        echo "We are going to install some prerequisite dependencies."
-        yum install -y oracle-softwarecollection-release-el7
-
-    else
-        echo "This is not CentOS 7, RHEL 7, or Oracle Linux 7. No specific actions required."
-    fi
-
-elif [ -f /etc/redhat-release ]; then
-    # Alternative check using redhat-release for systems where os-release is not available
-    if grep -q -E 'CentOS Linux release 7' /etc/redhat-release; then
-        echo "This is CentOS 7."
-        echo "We are going to install some prerequisite dependencies."
-        yum install -y centos-release-scl
-
-    elif grep -q -E 'Red Hat Enterprise Linux Server release 7' /etc/redhat-release; then
-        echo "This is RHEL 7."
-        echo "We are going to enable repositories and install dependencies."
-        subscription-manager repos --enable rhel-7-server-optional-rpms
-        subscription-manager repos --enable rhel-server-rhscl-7-rpms
-
-    elif grep -q -E 'Oracle Linux Server release 7' /etc/redhat-release; then
-        echo "This is Oracle Linux 7."
-        echo "We are going to install some prerequisite dependencies."
-        yum install -y oracle-softwarecollection-release-el7
-
-    else
-        echo "This is not CentOS 7, RHEL 7, or Oracle Linux 7."
-    fi
-else
-    echo "Could not determine the OS version."
+    log_message "Nginx repository configured successfully."
 fi
 
+sleep 2
+clear
 
-echo Now we are going to start installing ePortal
-echo
-echo
+log_message "Configuring TuxCare ePortal repository..."
 
-echo "We are checking to see if you have SELinux."
+# Check and configure TuxCare ePortal repo
+if ! check_repo_content "/etc/yum.repos.d/kcare-eportal.repo" "https://www.repo.cloudlinux.com/kcare-eportal" "TuxCare ePortal"; then
+    cat > /etc/yum.repos.d/kcare-eportal.repo <<EOL
+[kcare-eportal]
+name=KernelCare ePortal
+baseurl=https://www.repo.cloudlinux.com/kcare-eportal/\$releasever/\$basearch/
+enabled=1
+gpgkey=https://repo.cloudlinux.com/kernelcare/RPM-GPG-KEY-KernelCare
+gpgcheck=1
+EOL
+    log_message "TuxCare ePortal repository configured successfully."
+fi
 
-SELINUX_STATE=$(getenforce)
+sleep 2
+clear
 
-if [ "$SELINUX_STATE" == "Enforcing" ] || [ "$SELINUX_STATE" == "Permissive" ] ; then
-  echo ""
-  echo "SELinux is enabled"
-  echo "We are now installing ePortal with SELinux enabled."
-  sleep 4s
-  
-  yum -y install kcare-eportal
-  
+# OS Detection and prerequisite installation
+log_message "Detecting operating system and installing prerequisites..."
+
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+
+    case "$ID" in
+        "centos")
+            if [[ "$VERSION_ID" == "7" ]]; then
+                log_message "Detected CentOS 7. Installing prerequisite dependencies..."
+                yum install -y centos-release-scl
+            else
+                log_message "Detected CentOS $VERSION_ID. No specific prerequisites required."
+            fi
+            ;;
+        "rhel")
+            if [[ "$VERSION_ID" == "7" ]]; then
+                log_message "Detected RHEL 7. Enabling repositories and installing dependencies..."
+                subscription-manager repos --enable rhel-7-server-optional-rpms
+                subscription-manager repos --enable rhel-server-rhscl-7-rpms
+            else
+                log_message "Detected RHEL $VERSION_ID. No specific prerequisites required."
+            fi
+            ;;
+        "ol")
+            if [[ "$VERSION_ID" == "7" ]]; then
+                log_message "Detected Oracle Linux 7. Installing prerequisite dependencies..."
+                yum install -y oracle-softwarecollection-release-el7
+            else
+                log_message "Detected Oracle Linux $VERSION_ID. No specific prerequisites required."
+            fi
+            ;;
+        *)
+            log_message "Detected $ID $VERSION_ID. No specific prerequisites required."
+            ;;
+    esac
+
+elif [ -f /etc/redhat-release ]; then
+    if grep -q -E 'CentOS Linux release 7' /etc/redhat-release; then
+        log_message "Detected CentOS 7 (via redhat-release). Installing prerequisite dependencies..."
+        yum install -y centos-release-scl
+    elif grep -q -E 'Red Hat Enterprise Linux Server release 7' /etc/redhat-release; then
+        log_message "Detected RHEL 7 (via redhat-release). Enabling repositories..."
+        subscription-manager repos --enable rhel-7-server-optional-rpms
+        subscription-manager repos --enable rhel-server-rhscl-7-rpms
+    elif grep -q -E 'Oracle Linux Server release 7' /etc/redhat-release; then
+        log_message "Detected Oracle Linux 7 (via redhat-release). Installing prerequisites..."
+        yum install -y oracle-softwarecollection-release-el7
+    else
+        log_message "Could not determine specific OS version from redhat-release."
+    fi
 else
-  echo ""
-  echo "SELinux is disabled (or missing)"
-  echo "We are now installing ePortal with SELinux disabled."
-  sleep 4s
-  
-  yum -y install kcare-eportal
-  
-fi 
+    log_message "WARNING: Could not determine the OS version."
+fi
+
+sleep 2
+clear
+
+# SELinux detection and ePortal installation
+log_message "Checking SELinux status and installing ePortal..."
+
+SELINUX_STATE=$(getenforce 2>/dev/null || echo "Disabled")
+
+if [ "$SELINUX_STATE" == "Enforcing" ] || [ "$SELINUX_STATE" == "Permissive" ]; then
+    log_message "SELinux is enabled ($SELINUX_STATE). Installing ePortal with SELinux support..."
+else
+    log_message "SELinux is disabled or not available. Installing ePortal..."
+fi
+
+# Install ePortal package
+log_message "Installing kcare-eportal package..."
+if yum -y install kcare-eportal; then
+    log_message "kcare-eportal package installed successfully."
+else
+    log_message "ERROR: Failed to install kcare-eportal package!"
+    exit 1
+fi
+
+# Validate installation and service
+log_message "Validating ePortal installation and service..."
+if ! validate_service "eportal" "kcare-eportal"; then
+    log_message "WARNING: ePortal service validation failed. Continuing with configuration..."
+fi
 
 clear
 
-echo ePortal is now installed.
-echo
-echo
-echo "Let's set up your admin password so that you can log into the UI."
+# Admin password configuration
+log_message "Configuring admin password..."
 echo "Your password must contain at least 10 characters."
 while true; do
-read -s -p "Enter your password: " varPassword
-echo
+    read -s -p "Enter your password: " varPassword
+    echo
     if [ ${#varPassword} -ge 10 ]; then
-      echo "Password is valid."
-      kc.eportal -a admin -p $varPassword
-      break
+        log_message "Password is valid. Setting admin password..."
+        if kc.eportal -a admin -p "$varPassword"; then
+            log_message "Admin password configured successfully."
+            break
+        else
+            log_message "ERROR: Failed to set admin password. Please try again."
+        fi
     else
-      echo "Error: password should be at least 10 characters. Please try again."
+        log_message "ERROR: Password must be at least 10 characters. Please try again."
     fi
 done
 
-
-echo Your password has been configured successfully.
-sleep 3s
-
+sleep 2
 clear
 
-echo "Cache Mode:"
+# Cache Mode configuration
+log_message "Cache Mode Configuration:"
 echo ""
-echo "     Would you like to enable ePortal to Cache Patches?"
-echo "     This will cache meta-data and only store required patches on local server for two weeks."
-echo "     This greatly reduces the size of your eportal server as well as any backups."
+echo "Would you like to enable ePortal to Cache Patches?"
+echo "This will cache meta-data and only store required patches on local server for two weeks."
+echo "This greatly reduces the size of your eportal server as well as any backups."
 echo ""
 echo "Please type 'yes' or 'no'"
 
 read varCache
-a=$varCache
 
-if [ $a == yes ]
-then
-     clear
-     echo "We are now configuring your ePortal to Cache patches.  "
-  
-            FILE=/etc/eportal/config
-            if [ -f "$FILE" ]; then
-cat <<-EOT>>/etc/eportal/config
-CACHE_MODE = True
-EOT
-chown nginx:nginx /etc/eportal/config
-            else
-touch /etc/eportal/config
-cat <<-EOT>>/etc/eportal/config
-CACHE_MODE = True
-EOT
-chown nginx:nginx /etc/eportal/config
-            fi
-     else
-       clear
-       echo "Caching Mode will not be set."
-       sleep 3s
-     fi
+if [[ "$varCache" =~ ^[Yy][Ee][Ss]$ ]]; then
+    clear
+    log_message "Configuring ePortal to cache patches..."
+    
+    mkdir -p /etc/eportal
+    if [ -f "/etc/eportal/config" ]; then
+        # Check if CACHE_MODE already exists
+        if ! grep -q "CACHE_MODE" /etc/eportal/config; then
+            echo "CACHE_MODE = True" >> /etc/eportal/config
+        fi
+    else
+        echo "CACHE_MODE = True" > /etc/eportal/config
+    fi
+    chown nginx:nginx /etc/eportal/config
+    log_message "Cache mode enabled successfully."
+else
+    log_message "Cache mode will not be enabled."
+fi
+
+sleep 2
 clear
 
-echo "Business Unit Separation:"
+# Business Unit Separation configuration
+log_message "Business Unit Separation Configuration:"
 echo ""
 echo "Would you like to enable Managing Multiple Business Units in Isolation?"
 echo ""
 echo "Please type 'yes' or 'no'"
 
-read varCache
-a=$varCache
+read varBU
 
-if [ $a == yes ]
-then
-     clear
-     echo "We are now configuring your ePortal to enable BU Isolation.  "
-
-            FILE=/etc/eportal/config
-            if [ -f "$FILE" ]; then
-cat <<-EOT>>/etc/eportal/config
+if [[ "$varBU" =~ ^[Yy][Ee][Ss]$ ]]; then
+    clear
+    log_message "Configuring ePortal for Business Unit isolation..."
+    
+    mkdir -p /etc/eportal
+    if [ -f "/etc/eportal/config" ]; then
+        # Check if BUNITS settings already exist
+        if ! grep -q "BUNITS" /etc/eportal/config; then
+            cat >> /etc/eportal/config <<EOT
 BUNITS = True
 BUNITS_LOGIN_SELECTOR = True
 BUNITS_SELECTOR = True
 EOT
-chown nginx:nginx /etc/eportal/config
-            else
-touch /etc/eportal/config
-cat <<-EOT>>/etc/eportal/config
+        fi
+    else
+        cat > /etc/eportal/config <<EOT
 BUNITS = True
 BUNITS_LOGIN_SELECTOR = True
 BUNITS_SELECTOR = True
 EOT
-chown nginx:nginx /etc/eportal/config
-            fi
-     else
-       clear
-       echo "Business Unit Isolation will not be configured."
-       sleep 3s
-     fi
+    fi
+    chown nginx:nginx /etc/eportal/config
+    log_message "Business Unit isolation enabled successfully."
+else
+    log_message "Business Unit isolation will not be configured."
+fi
 
+sleep 2
 clear
 
-echo "     Do you need to configure your ePortal to work with a Proxy?"
-echo "     This may be required if you need FedRAMP or other security requirements."
+# Proxy configuration
+log_message "Proxy Configuration:"
+echo ""
+echo "Do you need to configure your ePortal to work with a Proxy?"
+echo "This may be required if you need FedRAMP or other security requirements."
 echo ""
 echo "**** If you configure this you will need to make sure your Proxy is properly configured. ****"
 echo "**** If you continue with this configuration now, you need to provide the Proxy URL. ****"
 echo "**** If you do not have the Proxy URL or Proxy configured, you can edit these settings later. ****"
-echo "**** Instructions:  https://docs.kernelcare.com/kernelcare-enterprise/#how-to-adjust-proxy-on-eportal-machine ****"
+echo "**** Instructions: https://docs.kernelcare.com/kernelcare-enterprise/#how-to-adjust-proxy-on-eportal-machine ****"
 echo ""
 echo "Please type 'yes' or 'no'"
+
 read varAnswer
-a=$varAnswer
-if [ $a == yes ]
-then
-     clear
-     echo "Please provide your full proxy url in full format: i.e.  https://example.com:3128  "
-     read varProxy
-            FILE=//etc/eportal/config
-            if [ -f "$FILE" ]; then
-cat <<-EOT>>/etc/eportal/config
-PROXY = '$varProxy'
-EOT
-chown nginx:nginx /etc/eportal/config
-systemctl restart eportal
-            else
-touch /etc/eportal/config
-cat <<-EOT>>/etc/eportal/config
-PROXY = '$varProxy'
-EOT
-chown nginx:nginx /etc/eportal/config
-systeclt restart eportal
+
+if [[ "$varAnswer" =~ ^[Yy][Ee][Ss]$ ]]; then
+    clear
+    echo "Please provide your full proxy URL in format: https://example.com:3128"
+    read varProxy
+    
+    if [[ "$varProxy" =~ ^https?:// ]]; then
+        log_message "Configuring proxy settings..."
+        
+        mkdir -p /etc/eportal
+        if [ -f "/etc/eportal/config" ]; then
+            # Check if PROXY setting already exists
+            if ! grep -q "PROXY" /etc/eportal/config; then
+                echo "PROXY = '$varProxy'" >> /etc/eportal/config
             fi
-     else
-       clear
-       echo ePortal will not be configured for Proxy Configuration
-       sleep 3s
-     fi
+        else
+            echo "PROXY = '$varProxy'" > /etc/eportal/config
+        fi
+        chown nginx:nginx /etc/eportal/config
+        log_message "Proxy configuration added successfully."
+    else
+        log_message "ERROR: Invalid proxy URL format. Skipping proxy configuration."
+    fi
+else
+    log_message "ePortal will not be configured for proxy."
+fi
+
+sleep 2
 clear
 
+# Final service restart and validation
+log_message "Restarting ePortal service to apply all configurations..."
 
-echo We are now going to restart your eportal to make sure all the configurations have taken.
 systemctl stop eportal
-sleep 3s
-systemctl start eportal
-sleep 3s
+sleep 3
+
+if systemctl start eportal; then
+    log_message "ePortal service restarted successfully."
+    sleep 3
+    
+    # Final service validation
+    if systemctl is-active --quiet eportal; then
+        log_message "ePortal service is running and ready."
+    else
+        log_message "WARNING: ePortal service may not be running properly."
+    fi
+else
+    log_message "ERROR: Failed to restart ePortal service!"
+    exit 1
+fi
+
+# Get and display server IP
+SERVER_IP=$(get_server_ip)
+if [ -n "$SERVER_IP" ]; then
+    log_message "Server IP detected: $SERVER_IP"
+else
+    log_message "Could not automatically detect server IP."
+    SERVER_IP="<Your-Server-IP>"
+fi
+
 echo
+echo "========================================="
+log_message "ePortal installation completed successfully!"
+echo "========================================="
 echo
-echo Your ePortal has been installed. It is now ready for you to login and finish synchronization.
-echo You can log in at http://YourServerIP or FQDN
+echo "You can now log in to your ePortal at:"
+echo "  http://$SERVER_IP"
 echo
+if [ "$SERVER_IP" != "<Your-Server-IP>" ] && command -v hostname >/dev/null; then
+    HOSTNAME=$(hostname -f 2>/dev/null || hostname)
+    if [ -n "$HOSTNAME" ] && [ "$HOSTNAME" != "localhost" ]; then
+        echo "  or http://$HOSTNAME"
+        echo
+    fi
+fi
+echo "Login credentials:"
+echo "  Username: admin"
+echo "  Password: [the password you just configured]"
 echo
-echo For additional information to configure your feed credentials look at
-echo https://docs.tuxcare.com/eportal/\#installation
+echo "For additional information on configuring feed credentials, visit:"
+echo "https://docs.tuxcare.com/eportal/#installation"
+echo
+log_message "Installation script completed."
